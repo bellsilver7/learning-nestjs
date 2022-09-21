@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { CreateMovieDto } from './dto/create-movie.dto';
 import { Movie } from './entities/movie.entity';
 import { MoviesService } from './movies.service';
 
@@ -25,7 +26,7 @@ export class MoviesController {
   }
 
   @Post()
-  store(@Body() movieData) {
+  store(@Body() movieData: CreateMovieDto) {
     return this.moviesService.save(movieData);
   }
 
