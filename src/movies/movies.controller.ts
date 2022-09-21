@@ -16,25 +16,22 @@ export class MoviesController {
 
   @Get()
   index(): Movie[] {
-    return this.moviesService.getAll();
+    return this.moviesService.all();
   }
 
   @Get(':id')
   show(@Param('id') movieId: string): Movie {
-    return this.moviesService.getOne(movieId);
+    return this.moviesService.find(movieId);
   }
 
   @Post()
-  create(@Body() movieData: object) {
-    return this.moviesService.store(movieData);
+  store(@Body() movieData) {
+    return this.moviesService.save(movieData);
   }
 
   @Patch(':id')
-  update(@Param('id') movieId: string, @Body() updateData: object) {
-    return {
-      updatedMovie: movieId,
-      ...updateData,
-    };
+  update(@Param('id') movieId: string, @Body() updateData) {
+    return this.moviesService.update(movieId, updateData);
   }
 
   @Delete(':id')
