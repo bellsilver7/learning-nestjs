@@ -6,29 +6,27 @@ import {
   Param,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
+import { Movie } from './entities/movie.entity';
+import { MoviesService } from './movies.service';
 
 @Controller('movies')
 export class MoviesController {
-  @Get()
-  index() {
-    return 'This will return all movies';
-  }
+  constructor(private readonly moviesService: MoviesService) {}
 
-  @Get('search')
-  search(@Query('year') searchingYear: string) {
-    return `We are searching for a movie made year: ${searchingYear}`;
+  @Get()
+  index(): Movie[] {
+    return this.moviesService.getAll();
   }
 
   @Get(':id')
-  show(@Param('id') movieId: string) {
-    return `This will return one movie with the id: ${movieId}`;
+  show(@Param('id') movieId: string): Movie {
+    return this.moviesService.getOne(movieId);
   }
 
   @Post()
   create(@Body() movieData: object) {
-    return movieData;
+    return this.moviesService.store(movieData);
   }
 
   @Patch(':id')
@@ -41,6 +39,6 @@ export class MoviesController {
 
   @Delete(':id')
   destroy(@Param('id') movieId: string) {
-    return `This will delete a movie with the id: ${movieId}`;
+    return this.moviesService.delete(movieId);
   }
 }
