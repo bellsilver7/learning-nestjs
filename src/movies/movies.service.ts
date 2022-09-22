@@ -10,17 +10,17 @@ export class MoviesService {
     return this.movies;
   }
 
-  find(id: string): Movie {
-    const movie = this.movies.find((movie) => movie.id === +id);
+  find(id: number): Movie {
+    const movie = this.movies.find((movie) => movie.id === id);
     if (!movie) {
       throw new NotFoundException(`Movie with ID ${id} not found.`);
     }
     return movie;
   }
 
-  delete(id: string) {
+  delete(id: number) {
     this.find(id);
-    this.movies = this.movies.filter((movie) => movie.id !== +id);
+    this.movies = this.movies.filter((movie) => movie.id !== id);
   }
 
   save(data: CreateMovieDto) {
@@ -30,7 +30,7 @@ export class MoviesService {
     });
   }
 
-  update(id: string, data) {
+  update(id: number, data) {
     this.find(id);
     this.delete(id);
     this.save(data);
